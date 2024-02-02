@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  remote-robot:
+    build: .
+    env_file: .env
+    container_name: remote-robot
+    network_mode: host
+    volumes:
+      - ./data:/rpa/data
