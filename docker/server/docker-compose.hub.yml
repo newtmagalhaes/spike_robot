@@ -2,16 +2,16 @@ version: "3.5"
 
 services:
   selenium-hub:
-    image: selenium/hub:4.8.1-20230221
+    image: selenium/hub:4.17.0
     container_name: selenium-hub
     ports:
       # descomentar para conectar nodes externos
-      - "4442:4442"
-      - "4443:4443"
+      # - "4442:4442"
+      # - "4443:4443"
       - "4444:4444"
 
   firefox:
-    image: selenium/node-firefox:4.8.1-20230221
+    image: selenium/node-firefox:4.17.0
     container_name: node-firefox
     shm_size: 1gb
     env_file:
@@ -22,7 +22,7 @@ services:
       - selenium-hub
 
   chrome:
-    image: selenium/node-chrome:4.8.1-20230221
+    image: selenium/node-chrome:4.17.0
     container_name: node-chrome
     shm_size: 1gb
     env_file:
