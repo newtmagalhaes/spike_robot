@@ -6,5 +6,8 @@ services:
     env_file: .env
     container_name: remote-robot
     network_mode: host
+    command: [ "remote.robot" ]
     volumes:
       - ./data:/rpa/data
+      - ./downloads:/rpa/donwloads
+      - ./logs:/rpa/logs
