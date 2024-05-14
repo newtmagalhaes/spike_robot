@@ -1,10 +1,38 @@
-version: "3"
-
 services:
   remote-robot:
     build: .
-    env_file: .env
+    # env_file: .env
+    environment:
+      - REMOTE_URL=http://selenium-hub:4444
+      - ROBOT_OPTIONS=--outputdir ./data/logs
     container_name: remote-robot
-    network_mode: host
     volumes:
       - ./data:/rpa/data
+    depends_on:
+      selenium-hub:
+        condition: service_healthy
+
+  selenium-hub:
+    image: selenium/standalone-firefox:122.0
+    # image: selenium/standalone-chrome:122.0
+    container_name: selenium-hub
+    shm_size: 2gb
+    restart: always
+    environment:
+      - SE_VNC_NO_PASSWORD=1
+      # Comente para manter o grid rodando após 1 sessão
+      - SE_DRAIN_AFTER_SESSION_COUNT=1
+    # Descomente portas para ver o selenium grid
+    ports:
+      - 4444:4444
+    volumes:
+      - selenium_downloads:/home/seluser/Downloads
+    healthcheck:
+      test: ['CMD-SHELL', '/opt/bin/check-grid.sh', '--host', '0.0.0.0', '--port', '4444']
+      interval: 10s
+      timeout: 15s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  selenium_downloads:

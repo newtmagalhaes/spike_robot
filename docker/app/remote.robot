@@ -2,16 +2,12 @@
 Library     SeleniumLibrary
 
 
-*** Variables ***
-${BROWSER}      firefox
-
-
 *** Tasks ***
 Case 1: Abrir Youtube e gravar Screenshot
     [Setup]    Open youtube
     # Faz algo
-    Capture Page Screenshot    ${BROWSER}.png
-    # Sleep    10s
+    Sleep    15s
+    Capture Page Screenshot
     [Teardown]    Close Browser
 
 
@@ -19,4 +15,4 @@ Case 1: Abrir Youtube e gravar Screenshot
 Open youtube
     Set Screenshot Directory    /rpa/data
     Log To Console    REMOTO: %{REMOTE_URL=False}
-    Open Browser    https://youtube.com    ${BROWSER}    remote_url=%{REMOTE_URL=False}
+    Open Browser    https://youtube.com    firefox    remote_url=%{REMOTE_URL=False}
